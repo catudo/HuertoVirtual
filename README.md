@@ -11,11 +11,11 @@ git clone https://github.com/catudo/HuertoVirtual.git
 ```
 
 ## Integrantes
-Manuela Solorzano - 201532341
 
+Manuela Solorzano - 201532341
 Carlos Gutierrez - 201819537
 Sebastian Calvache - 202022899
-Please make sure to update tests as appropriate.
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
