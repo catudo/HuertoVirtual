@@ -1,0 +1,35 @@
+:: StoryTitle
+TestPlant
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: The start node will simply instantiate the pot[START]
+Here we will show the first pot that will have some instructions and an open introduction.
+@
+[[Off the to the dialogue]]
+{}
+<
+Simulator.InicializarConstantes("TweenityInstructions")
+Simulator.OpenDialogueViewer()
+>
+
+
+:: Off the to the dialogue[dialogue]
+Here we will show a simple dialogue window. The option will lead to the end
+@
+This is a sample dialogue, click the option to go to the end
+[[To the end]]
+{}
+<>
+
+:: To the end
+hooray! you got to the end[END]
+@
+[[X]]
+{}
+<Simulator.CloseDialogueViewer()>
+

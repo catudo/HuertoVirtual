@@ -1,0 +1,433 @@
+:: StoryTitle
+Huerto Virtual
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+:: Inicio y Informacion inicial del Semillero[START dialogue]
+En este nodo se le da la bienvenida al usuario y se le explica el proposito del entrenador, el cual es aprender a sembrar plantas de tomate cherry. Se le muestra un dialogo de bienvenida, junto con la explicacion de que el primer paso del proceso sera elegir un semillero ideal.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/VistaBienvenida.jpg" width="500" height = "300"
+>
+@
+Bienvenido al entrenador del huerto virtual. Aqui se mostraran los pasos a seguir para crecer una planta de tomate cherry dentro de una terraza urbana. Haz click para empezar y ir al primer paso que sera escoger el semillero ideal. Recuerda que el semillero ideal consiste de los siguientes atributos XXXXXX.
+[[Elegir el Semillero]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
+
+:: Elegir el Semillero[multipleChoice]
+En este nodo el usuario sera responsable de elegir el semillero correcto para crecer la planta de tomate. Basado en la informacion presentada previamente acerca del tipo de semillero ideal para crecer una planta de tomate, el usuario debera elegir entre dos semilleros los cuales estaran en cima de una mesa, la cual se usara para preparar la planta para crecer.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionDeSemillero.jpg" width="500" height = "300"
+>
+@
+[[SemilleroCorrecto.Select():Semillero Ideal Seleccionado]] 
+[[SemilleroIncorrecto.Select():Semillero No Ideal Seleccionado]]
+{
+SemilleroCorrecto.Select()
+SemilleroIncorrecto.Select()
+}
+<
+Simulator.CloseDialogueViewer()
+PotsController.ShowPot("pot1";true)
+PotsController.ShowPot("pot2";true)
+>
+
+:: SemilleroCorrecto.Select():Semillero Ideal Seleccionado[dialogue]
+El usuario ha elegido el semillero correcto. Se desvanece el semillero incorrecto y tambien se despliega una caja de dialogo con la informacion de porque el semillero es ideal, junto con un prompt para que el usuario siga a la preparacion de la mezcla del semillero.
+@
+Elegiste el mejor semillero por estas calidades:
+esde semilleros de plástico especializados a cajones de porexpan. En cualquier caso, es importante practicarle en el fondo unos pequeños agujeros de drenaje si el recipiente no cuenta con ellos.
+A continuacion seguiremos para preparar la mezcla del semillero.
+[[Preparar la Mezcla de Semillero]]
+{}
+<
+Simulator.OpenDialogueViewer()
+PotsController.ShowPot("pot2";false)
+>
+
+:: SemilleroIncorrecto.Select():Semillero No Ideal Seleccionado[dialogue]
+La eleccion del semillero del usuario fue incorrecto. Al usuario se le explicara las razones por la cual eligio el semillero incorrecto, y inmediatamente sera dado la opcion para elegir el mejor semillero. Se dara la opcion para regresar a la pantalla de seleccion de los semilleros para que el usuario pueda repetir el paso.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionIncorrecta.jpg" width="500" height = "300"
+>
+@
+La seleccion del semillero fue incorrecta. Quieres intentar de nuevo?
+[[Elegir el Semillero]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
+
+:: Preparar la Mezcla de Semillero[dialogue]
+Se ilustra los requerimientos de le mezcal ideal para el semillero. Una vex el usuario entienda la informacion, se procede a la evaluacion donde debera escoger la mezcla de semillero ideal
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/DialogoInformacion.jpg" width="500" height = "300"
+>
+@
+Lo ideal es preparar una mezcla con una parte de turba, otra de fibra de coco y otra de humus de lombriz, a la que luego añadiremos un poco de vermiculita y perlita. Con esta mezcla tan rica, no tendrás ningún problema para que tus tomates germinen.
+[[Seleccion de la mezcla de semillero]]
+{}
+<>
+
+:: Seleccion de la mezcla de semillero[multipleChoice]
+La camara hara un zoom in a la mesa para ver la seleccion mezclas de semillero disponibles.
+Se muestran las diferentes mezclas de semillero, de las cuales el usuario debe elegir la correcta para poder seguir adelante.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionDeMezcla.jpg" width="500" height = "300"
+>
+@
+[[MezclaController.CorrectIngredientsSelected(): Se escoge la mezcla de semillero correcta]]
+[[MezclaController.IncorrectIngredientsSelected(): Se escoge la mezcla de semillero incorrectas]]
+{
+MezclaController.IncorrectIngredientsSelected()
+MezclaController.CorrectIngredientsSelected()
+}
+<
+Simulator.CloseDialogueViewer()
+MezclaController.ShowMezcla("ingredient1";true)
+MezclaController.ShowMezcla("ingredient2";true)
+MezclaController.ShowMezcla("ingredient3";true)
+MezclaController.ShowMezcla("ingredient4";true)
+MezclaController.ShowMezcla("ingredient5";true)
+MezclaController.ShowMezcla("ingredient6";true)
+>
+
+:: MezclaController.IncorrectIngredientsSelected(): Se escoge la mezcla de semillero incorrectas[dialogue]
+Se ha escogido la mezcla de semillero incorrecto. Se describe porque esta mezcla en particula esta incorrecta y se da la opcion para poder regresar al nodo previo y darle la oportunidad al usuario de elegir de nuevo.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionIncorrecta.jpg" width="500" height = "300"
+>
+@
+Semillero
+[[Seleccion de la mezcla de semillero]]
+{}
+<
+Simulator.OpenDialogueViewer()
+MezclaController.ShowMezcla("ingredient1";true)
+MezclaController.ShowMezcla("ingredient2";true)
+MezclaController.ShowMezcla("ingredient3";true)
+MezclaController.ShowMezcla("ingredient4";true)
+MezclaController.ShowMezcla("ingredient5";true)
+MezclaController.ShowMezcla("ingredient6";true)
+>
+
+:: MezclaController.CorrectIngredientsSelected(): Se escoge la mezcla de semillero correcta[dialogue]
+Se ha escogido la mezcla de semillero correcta. Se describe porque esta mezcla en particula esta correcta. 
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionCorrecta.jpg" width="500" height = "300"
+>
+@
+Descripcion de porque esta fue la seleccion correcta. A continuacion vamos a explorar los tipos de semillas que hay para sembrar.
+[[Informacion de las semillas y proceder a la seleccion de Semillas]]
+{}
+<
+Simulator.OpenDialogueViewer()
+MezclaController.ShowMezcla("ingredient1";false)
+MezclaController.ShowMezcla("ingredient2";false)
+MezclaController.ShowMezcla("ingredient3";false)
+MezclaController.ShowMezcla("ingredient4";false)
+MezclaController.ShowMezcla("ingredient5";false)
+MezclaController.ShowMezcla("ingredient6";false)
+>
+
+:: Informacion de las semillas y proceder a la seleccion de Semillas[dialogue]
+A continuacion se describen el tipo de semillas que se van a sembrar y se le da la opcion al usuario de escoger entre un rango de semillas cuales escoger. Se explicara el tipo de semilla que se busca para sembrar los tomate cherry, y se le dara la opcion al usuario de proceder a la seleccion de las semillas.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/DialogoInformacion.jpg" width="500" height = "300"
+>
+@
+Por ser un huerto de terraza, y por tipo de clima templado, se sugiere plantar tomate cherry. Selecciona de cual de estas semillas a continuacion es la ideal basada en la imagen.
+[[Seleccion de Semillas]]
+{}
+<>
+
+:: Seleccion de Semillas[multipleChoice]
+Se muestra varias semillas, en la mesa, el usuario debe elegir la semilla correcta basada en la informacion previamente otorgada. Se muestra tambien la imagen de la semilla que se espera que podra identificar el usuario.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionDeSemillas.jpg" width="500" height = "300"
+>
+@
+[[SemillaCorrecta.Select(): Semillas Correctas Seleccionadas y informacion de que se van a sembrar las semillas]]
+[[SemillaIncorrecta.Select(): Semillas Incorrectas Seleccionadas]]
+{
+SemillaCorrecta.Select()
+SemillaIncorrecta.Select()
+}
+<
+Simulator.CloseDialogueViewer()
+SeedController.ShowSeed("seed1";true)
+SeedController.ShowSeed("seed2";true)
+>
+
+:: SemillaIncorrecta.Select(): Semillas Incorrectas Seleccionadas[dialogue]
+El usuario eligio la semilla incorrecta. Se le explica porque la seleccion fue incorrecta y se le da al usuario la opcion de regresar al nodo previo para elegir de nuevo.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionIncorrecta.jpg" width="500" height = "300"
+>
+@
+Semillas Incorrectas seleccionadas
+[[Seleccion de Semillas]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
+
+:: SemillaCorrecta.Select(): Semillas Correctas Seleccionadas y informacion de que se van a sembrar las semillas[dialogue]
+Una vez la semilla ideal ha sido seleccionada, se explicara que el usuario ahora deber coger la semilla y sembrarla dentro del semillero dentro del simulador.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionCorrecta.jpg" width="500" height = "300"
+>
+@
+Has elegido la semilla correcta, a continuacion vamos a sembrar las semillas de tomate. Debereas recoger las semillas y ponerlas dentro del semillero, y despues regar el agua inicial para iniciar el proceso de crecimiento.
+[[Sembrar Tomates]]
+{}
+<
+Simulator.OpenDialogueViewer()
+SemillaCorrecta.activatePickUp();
+SeedController.ShowSeed("seed2";false)
+>
+
+:: Sembrar Tomates[multipleChoice reminder]
+Las semillas de tomate se deben sembrar en el semillero y se muestra la informacion para sembrarlas bien. Se mostrara un reminder para mostrar que las semillas se pueden recoger y interactuar con ellas. 
+Una vez las semillas esten sembradas, activara un booleano para que la funcion Semillas.Sembradas() retorne true. Una vez este sea el caso se activara el siguiente nodo en donde el usuario regara la planta con el regador.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/SembrarSemillas.jpg" width="500" height = "300"
+>
+@
+[[SemilleroCorrecto.Plant(): Informacion de siguiente paso de regar la planta para que crezca]]
+{
+SemilleroCorrecto.Plant()
+}
+<
+Simulator.CloseDialogueViewer()
+Simulator.ShowReminder(1; SemilleroCorrecto)
+>
+
+:: SemilleroCorrecto.Plant(): Informacion de siguiente paso de regar la planta para que crezca[dialogue]
+El usuario regara agua en el semillero hasta cierto limite. Para esto, el usuario debera coger y interactuar con un regador virtual. Una vez se haya regado la cantidad adecuada de agua, se activara un booleano para que la funcion Regador.PlantasRegadas() retorne true. Una vez este sea el caso se procede al siguiente nodo que sera de elegir el ambiente de crecimiento.
+Se muestra un reminder donde se elige la herramienta para regar la planta.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/RegarPlanta.jpg" width="500" height = "300"
+>
+@
+[[Regar Planta]]
+{}
+<
+Simulator.OpenDialogueViewer()
+SeedController.ShowSeed("seed1";false)
+>
+
+:: Regar Planta[multipleChoice reminder]
+El usuario regara agua en el semillero hasta cierto limite. Para esto, el usuario debera coger y interactuar con un regador virtual. Una vez se haya regado la cantidad adecuada de agua, se activara un booleano para que la funcion Regador.PlantasRegadas() retorne true. Una vez este sea el caso se procede al siguiente nodo que sera de elegir el ambiente de crecimiento.
+Se muestra un reminder donde se elige la herramienta para regar la planta.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/RegarPlanta.jpg" width="500" height = "300"
+>
+@
+[[PotsController.PlantGrew(): Informacion de siguiente paso de elegir ambiente de crecimiento]]
+{
+PotsController.PlantGrew()
+}
+<
+Simulator.CloseDialogueViewer()
+PotsController.Grow("pot1")
+>
+
+:: Test de water[multipleChoice]
+@
+[[PotsController.PlantGrew(): Informacion de siguiente paso de elegir ambiente de crecimiento]]
+{
+PotsController.PlantGrew()
+}
+<
+Simulator.CloseDialogueViewer()
+PotsController.Grow("pot1")
+>
+
+:: PotsController.PlantGrew(): Informacion de siguiente paso de elegir ambiente de crecimiento[dialogue]
+En este nodo de dialogo se presentara informacion acerca del tipo de ambiente ideal para que crezca la planta de tomates. Se le dictara al usuario que las plantas de tomate requieren de harta luz, y que a continuacion debera escoger entre diferentes posiciones en la terraza para que crezca la planta.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/DialogoInformacion.jpg" width="500" height = "300"
+>
+@
+Se va a elegir el ambiente de crecimiento
+[[Elegir ambiente de crecimiento]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
+
+:: Elegir ambiente de crecimiento[multipleChoice]
+El usuario es dado la libertad de escoger el mejor punto de crecimiento basado en la informacion que los tomates requiren de bastante luz.
+El usuario debe elegir entre varias opciones predeterminadas en la terraza.
+Para esta vista, la camara se acomodara automaticamente para dar un panorama de toda la terraza, el usuario usando el cursor entonces eligira en que parte de la terraza poner la planta.
+Se presenta informacion para que el usuario pueda elegir el lugar para crecer correcto
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/SeleccionDeLocacion.jpg" width="500" height = "300"
+>
+@
+[[CorrectLocation.Select(): Se elige lugar de crecimiento correcto]]
+[[IncorrectLocation.Select():Se elige el lugar de crecimiento erroneo]]
+{
+CorrectLocation.Select()
+IncorrectLocation.Select()
+}
+<
+Simulator.CloseDialogueViewer()
+XRRig.ZoomOutToBalcony()
+LocationsController.ShowLoc("loc1";true)
+LocationsController.ShowLoc("loc2";true)
+>
+
+:: IncorrectLocation.Select():Se elige el lugar de crecimiento erroneo[dialogue]
+Se ha elegido un lugar de crecimiento no optimo, se explica porque el lugar no es optimo y se da la eleccion para poder regresar al nodo previo y seleccionar de nuevo.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionIncorrecta.jpg" width="500" height = "300"
+>
+@
+Explicacion de porque la seleccion fue incorrecta.
+[[Elegir ambiente de crecimiento]] 
+{}
+<Simulator.OpenDialogueViewer()>
+
+:: CorrectLocation.Select(): Se elige lugar de crecimiento correcto[dialogue]
+Se ha elegido el lugar de crecimiento correcto. Se explica que ahora la planta se deja sola para que germine aplicando agua como necesario y asegurando que la planta recibira la cantidad de sol necesaria.
+Para esta escena la camara hara un zoom in a la locacion nueva para mantener una perspectiva similar a la que se vio al inicio del entrenador durante la preparacion del semillero. 
+Se explica que ahora se dejara la planta hasta que germine, y el siguiente paso sera 15 dias en el futuro.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EleccionCorrecta.jpg" width="500" height = "300"
+>
+@
+Explicacion de porque esta fue la locacion ideal, se le da la opcion al usuario para acelerar 15 dias al futuro para el siguiente paso del mantenimiento de la planta.
+[[Time Jump a 15 dias despues y informacion acerca el crecimiento de la planta y el mantenimiento]]
+{}
+<
+Simulator.OpenDialogueViewer()
+XRRig.ZoomInNewLocation()
+DialogueMover.ChangePositionCorrectLocation();
+SemilleroCorrecto.TransformPosition()
+>
+
+:: Time Jump a 15 dias despues y informacion acerca el crecimiento de la planta y el mantenimiento[multipleChoice]
+Ya han pasado 15 dias y la planta a empezado a germina. Se muestra una animacion corta de la planta empezando a germinar y crecer fuera del matero
+Se explica que para que crezca bien, se necesita que crezca verticalemnte. Para que crezca verticalmente, se realizara el proceso de entutorado en el siguiente nodo, el cual consiste en clavar un palo caña para que le de soporte a la planta de tomate.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/VistaTerrazaNueva.jpg" width="500" height = "300"
+>
+@
+[[PotsController.PlantGrewFirstStage(): informacion acerca el crecimiento de la planta y el mantenimiento]]
+{
+PotsController.PlantGrewFirstStage();
+}
+<
+Simulator.CloseDialogueViewer();
+PotsController.GrowFirstStep();
+>
+
+:: PotsController.PlantGrewFirstStage(): informacion acerca el crecimiento de la planta y el mantenimiento[dialogue]
+Ya han pasado 15 dias y la planta a empezado a germina. Se muestra una animacion corta de la planta empezando a germinar y crecer fuera del matero
+Se explica que para que crezca bien, se necesita que crezca verticalemnte. Para que crezca verticalmente, se realizara el proceso de entutorado en el siguiente nodo, el cual consiste en clavar un palo caña para que le de soporte a la planta de tomate.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/VistaTerrazaNueva.jpg" width="500" height = "300"
+>
+@
+Se explica que para que crezca bien, se necesita que crezca verticalemnte. Para que crezca verticalmente, se realizara el proceso de entutorado en el siguiente nodo, el cual consiste en clavar un palo caña para que le de soporte a la planta de tomate.
+[[El usuario entutora la planta]]
+{}
+<
+Simulator.OpenDialogueViewer();
+>
+
+
+:: El usuario entutora la planta[multipleChoice]
+Se da la opcion para elegir el soporte y ponerlo dentro del semillero. Similar al nodo en donde se sembraba y regaba la planta, el usuario debera recoger la herramienta y ponerla dentro del matero. Una vez hecho, se procede al siguiente nodo para para brindar informacion adicional acerca el mantenimiento de la planta durante su crecimiento.
+Se muestra un reminder para poder localizar y elegir el soporte para entutorar la planta
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/EntorarPlanta.jpg" width="500" height = "300"
+>
+@
+[[SemilleroCorrecto.Entutorado(): Informacion de siguiente paso de podar planta]]
+{
+SemilleroCorrecto.Entutorado()
+}
+<
+DialogueMover.DragDown();
+>
+
+
+:: SemilleroCorrecto.Entutorado(): Informacion de siguiente paso de podar planta[dialogue]
+Se presenta informacion que la planta sigue creciendo y la parte adicional del mantenimiento es retirar los brotes auxiliares para que crezca mejor la  planta. Se informa al usuario que debe recoger las tijeras para despues quitar los brotes auxiliares. 
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/DialogoInformacion.jpg" width="500" height = "300"
+>
+@
+Informacion acerca de remover los brotes auxiliares con las tijeras
+[[Seguir a siguiente paso donde la planta crece]]
+{}
+<
+Entorado.activatePickUp()
+DialogueMover.DragUp();
+Simulator.OpenDialogueViewer()
+>
+
+:: Remover brotes auxiliares[multipleChoice]
+En este nodo el usuario recogera las tijeras y removera los brotes auxiliares.
+Se usara un reminder para informar la herramienta para recoger, y cuales son los brotes auxiliares para remover con ella.
+Una vez se reconozco que se han eliminado los brotes, se procedera al siguiente nodo de informacion.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/PodarTomates.jpg" width="500" height = "300"
+>
+@
+[[BrotesAuxiliares.Remove(): Seguir a siguiente paso donde la planta crece]]
+{
+BrotesAuxiliares.Remove()
+}
+<
+Simulator.CloseDialogueViewer()
+>
+
+:: Seguir a siguiente paso donde la planta crece[dialogue]
+Se informa al usuario que estos son los pasos para repetir y estar atento durante el crecimiento de la planta. Se presentara el tiempo de espera para que la planta madure y se puedan cosechar los frutos. Al seguir al siguiente nodo, se activa una animacion de crecimiento.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/DialogoInformacion.jpg" width="500" height = "300"
+>
+@
+Se despliega informacion acerca la ultima etapa de crecimiento de la planta
+[[Ver planta crecer hasta estar lista para cosechar]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
+
+:: Ver planta crecer hasta estar lista para cosechar[multipleChoice]
+En este nodo se activa la animacion donde crece la planta lista para cosechar. No se espera ningun input del usuario. Al terminar la animacion se pasa al siguiente nodo de cosecha.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/PlantaMadura.jpg" width="500" height = "300"
+>
+@
+[[PotsController.PlantGrewSecondStage(): Cosecha de planta]]
+{
+PotsController.PlantGrewSecondStage();
+}
+<
+Simulator.CloseDialogueViewer()
+PotsController.GrowSecondStep()
+>
+
+:: PotsController.PlantGrewSecondStage(): Cosecha de planta[dialogue END]
+Ya la planta esta lista para cosechar. Se muestra una dialogo de texto al usuario que ha llegado al final del entrenador y se le ha presentado todos los pasos para poder crecer una planta de tomate en su terraza.
+<img
+src="https://raw.githubusercontent.com/sebascal1/Huerto/main/End.jpg" width="500" height = "300"
+>
+@
+Felicitaciones! La planta esta lista para la cosecha. Ya llegaste al final del entrenador
+[[X]]
+{}
+<
+Simulator.OpenDialogueViewer()
+>
