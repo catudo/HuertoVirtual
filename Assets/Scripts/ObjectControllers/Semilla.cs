@@ -8,11 +8,13 @@ public class Semilla : MonoBehaviour
     private Vector3 mOffset;
     private float mZCoord;
     private bool pickup = false;
+    private Vector3 stationaryPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<Collider>();
+        stationaryPosition = this.transform.position;
     }
 
     public void activatePickUp()
@@ -20,7 +22,7 @@ public class Semilla : MonoBehaviour
         pickup = true;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //creates a ray that originates from the position of the mouse
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,16 +35,21 @@ public class Semilla : MonoBehaviour
         //    //Select();
         //}
 
-        if (Input.GetMouseButtonDown(0) && !pickup)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        /*        if (Input.GetMouseButtonDown(0) && !pickup)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
 
-            if (coll.Raycast(ray, out hit, 100.0f))
-            {
-                Debug.Log("you selected" + gameObject.name);
-                Select();
-            }
+                    if (coll.Raycast(ray, out hit, 100.0f))
+                    {
+                        Debug.Log("you selected" + gameObject.name);
+                        Select();
+                    }
+                }*/
+
+        if (!pickup)
+        {
+            this.transform.position = stationaryPosition;
         }
 
     }

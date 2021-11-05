@@ -6,6 +6,7 @@ public class Vegetable : MonoBehaviour
 {
     public bool isGrowing;
     float growthSpeed = 0.5f;
+    public float growthFactor;
     float growth;
 
     void Grow()
@@ -13,7 +14,7 @@ public class Vegetable : MonoBehaviour
         growth += Time.deltaTime * growthSpeed;
         growth = Mathf.Clamp(growth, 0.1f, 1);
 
-        this.transform.localScale = new Vector3(growth, growth, growth);
+        this.transform.localScale = new Vector3(growth, growth, growth) * growthFactor;
     }
 
     // Start is called before the first frame update

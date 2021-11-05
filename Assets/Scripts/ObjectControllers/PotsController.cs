@@ -8,6 +8,8 @@ public class PotsController : MonoBehaviour
     public GameObject pot2;
     public GameObject WaterContainer;
     public GameObject plant;
+    public GameObject entorado;
+
     PourDetector PourTrigger;
     public List<string> potsToGrow = new List<string>();
     [SerializeField] List<Vegetable> vegetables;
@@ -20,6 +22,9 @@ public class PotsController : MonoBehaviour
     private float plantSize = 0f;
     public float sizeFactor = 0.5f;
     public int BrotesRemoved = 0;
+    private bool firstStepAlreadyGrown = false;
+    private bool secondtStepAlreadyGrown = false;
+    private float fruitSize;
 
     private void Start()
     {
@@ -42,6 +47,11 @@ public class PotsController : MonoBehaviour
                 break;
 
         }
+    }
+
+    public void ShowEntorado()
+    {
+        entorado.SetActive(true);
     }
 
     public void Grow(object potName)
@@ -73,15 +83,27 @@ public class PotsController : MonoBehaviour
 
     public void GrowFirstStep()
     {
-        firstGrowth = true;
-        plantSize = 0;
+        if (!firstStepAlreadyGrown)
+        {
+           firstGrowth = true;
+            plantSize = 0;
+            firstStepAlreadyGrown = true;
+        }
+ 
 
     }
 
-    public void GrowSecondStep()
+    public void GrowSecondStep(string idealLocation)
     {
-        secondGrowth = true;
-        plantSize = 0.3f;
+        if (!secondtStepAlreadyGrown)
+        {
+           sizeFactor = idealLocation == "true" ? sizeFactor : sizeFactor * 0.65f ;
+            fruitSize = idealLocation == "true" ? 0.85f : 0.65f;
+            secondGrowth = true;
+            plantSize = 0.3f;
+            secondtStepAlreadyGrown = true;
+        }
+
 
     }
 
@@ -155,6 +177,7 @@ public class PotsController : MonoBehaviour
                 foreach (Vegetable veg in vegetables)
                 {
                     veg.isGrowing = true;
+                    veg.growthFactor = fruitSize;
                 }
                 PlantGrewSecondStage();
 

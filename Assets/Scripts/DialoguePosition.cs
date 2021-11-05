@@ -21,7 +21,7 @@ public class DialoguePosition : MonoBehaviour
     {
         //this.transform.localPosition = new Vector3(2.31f, 1.6f, 6.07f);
         //this.transform.Rotate(new Vector3(14.6f, 53.3f, 0f));
-        this.transform.localPosition = new Vector3(7.558F, 0.799f, 8.261f);
+        this.transform.localPosition = new Vector3(7.558F, 0.77f, 7.59f);
         this.transform.Rotate(new Vector3(-2.8f, 88.863f, -1.941f));
 
         DragUpPos = this.transform.localPosition;
